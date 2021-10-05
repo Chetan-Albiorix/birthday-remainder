@@ -11,9 +11,8 @@ function App() {
           className="App-logo"
           alt="logo"
         />
-
         <p>
-          Edit <code>src/App.tsx</code> and save
+          Edits <code>src/App.tsx</code> and save
           to reload.
         </p>
         <a
