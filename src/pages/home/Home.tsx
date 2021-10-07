@@ -128,7 +128,10 @@ const DrawerHeader = styled('div')(
 
 const Home = () => {
   const theme = useTheme()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] =
+    React.useState<boolean>(false)
+  const [shownDialog, isShownDialog] =
+    React.useState<boolean>(false)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -136,6 +139,14 @@ const Home = () => {
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+
+  const openDialog = () => {
+    isShownDialog(true)
+  }
+
+  const handleCloseDialog = () => {
+    isShownDialog(false)
   }
 
   return (
@@ -206,8 +217,11 @@ const Home = () => {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Button variant="contained">
-          Contained
+        <Button
+          variant="contained"
+          onClick={openDialog}
+        >
+          Add Birth Details
         </Button>
         <TableContainer component={Paper}>
           <Table
@@ -265,7 +279,10 @@ const Home = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <AddFriend />
+        <AddFriend
+          isShownDialog={shownDialog}
+          handleClose={handleCloseDialog}
+        />
       </Main>
     </Box>
   )

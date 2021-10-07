@@ -7,7 +7,17 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import Typography from '@mui/material/Typography'
+import {
+  Box,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextareaAutosize,
+  TextField,
+} from '@mui/material'
+import { AddFriendContainer } from './AddFriend.Style'
 
 const BootstrapDialog = styled(Dialog)(
   ({ theme }) => ({
@@ -53,57 +63,110 @@ const BootstrapDialogTitle = (
   )
 }
 
-const AddFriend = () => {
-  const [open, setOpen] = React.useState(false)
+interface AddFriendProps {
+  isShownDialog: boolean
+  handleClose: () => void
+}
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-  const handleClose = () => {
-    setOpen(false)
-  }
+const AddFriend: React.FC<AddFriendProps> = ({
+  isShownDialog,
+  handleClose,
+}) => {
+  const [gender, setGender] = React.useState('')
 
   return (
     <div>
-      <Button
-        variant="outlined"
-        onClick={handleClickOpen}
-      >
-        Open dialog
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={isShownDialog}
       >
         <BootstrapDialogTitle
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Modal title
+          Add Birth Date
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet
-            fermentum. Cras justo odio, dapibus ac
-            facilisis in, egestas eget quam. Morbi
-            leo risus, porta ac consectetur ac,
-            vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel
-            scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue
-            laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed
-            consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl
-            consectetur et. Donec sed odio dui.
-            Donec ullamcorper nulla non metus
-            auctor fringilla.
-          </Typography>
+          <AddFriendContainer>
+            <Grid xs={12} container>
+              <Box mr={2} mt={1}>
+                <TextField
+                  label="First Name"
+                  variant="standard"
+                />
+              </Box>
+              <Box mt={1}>
+                <TextField
+                  label="Last Name"
+                  variant="standard"
+                />
+              </Box>
+            </Grid>
+            <Grid xs={12} container>
+              <Box mr={2} mt={1}>
+                <TextField
+                  label="Mobile Number"
+                  variant="standard"
+                />
+              </Box>
+              <Box mt={1}>
+                <TextField
+                  label="Email"
+                  variant="standard"
+                />
+              </Box>
+            </Grid>
+            <Grid xs={12} container>
+              <Box mr={2} mt={1}>
+                <TextField
+                  label="Birth Date"
+                  variant="standard"
+                />
+                {/* <CustomDatePicker
+                  date={new Date()}
+                  label="Birth Date"
+                  disableFuture={true}
+                  onDateChanged={(
+                    date: Date | null
+                  ) => {}}
+                /> */}
+              </Box>
+              <FormControl
+                variant="standard"
+                sx={{ minWidth: 200 }}
+              >
+                <Box mt={1}>
+                  <InputLabel id="demo-simple-select-standard-label">
+                    Gender
+                  </InputLabel>
+                  <Select
+                    value={gender}
+                    onChange={() => {}}
+                    label="Gender"
+                    fullWidth
+                  >
+                    <MenuItem value="Male">
+                      Male
+                    </MenuItem>
+                    <MenuItem value="FeMale">
+                      FeMale
+                    </MenuItem>
+                    <MenuItem value="Others">
+                      Others
+                    </MenuItem>
+                  </Select>
+                </Box>
+              </FormControl>
+            </Grid>
+            <Grid xs={12} container mt={3}>
+              <TextareaAutosize
+                minRows={3}
+                placeholder="Message"
+                style={{ width: '100%' }}
+              />
+            </Grid>
+          </AddFriendContainer>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
