@@ -18,6 +18,8 @@ import {
   TextField,
 } from '@mui/material'
 import { AddFriendContainer } from './AddFriend.Style'
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 
 const BootstrapDialog = styled(Dialog)(
   ({ theme }) => ({
@@ -72,7 +74,31 @@ const AddFriend: React.FC<AddFriendProps> = ({
   isShownDialog,
   handleClose,
 }) => {
-  const [gender, setGender] = React.useState('')
+  const schema = Yup.object().shape({
+    firstName: Yup.string().required(),
+    lastName: Yup.string().required(),
+    email: Yup.string()
+      .email('Invalid email')
+      .required(),
+    mobileNumber: Yup.string().required(),
+    gender: Yup.string().required(),
+    message: Yup.string().required(),
+  })
+
+  const formik = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      mobileNumber: '',
+      gender: '',
+      message: '',
+    },
+    validationSchema: schema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2))
+    },
+  })
 
   return (
     <div>
@@ -87,43 +113,92 @@ const AddFriend: React.FC<AddFriendProps> = ({
         >
           Add Birth Date
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <AddFriendContainer>
-            <Grid xs={12} container>
-              <Box mr={2} mt={1}>
-                <TextField
-                  label="First Name"
-                  variant="standard"
-                />
-              </Box>
-              <Box mt={1}>
-                <TextField
-                  label="Last Name"
-                  variant="standard"
-                />
-              </Box>
-            </Grid>
-            <Grid xs={12} container>
-              <Box mr={2} mt={1}>
-                <TextField
-                  label="Mobile Number"
-                  variant="standard"
-                />
-              </Box>
-              <Box mt={1}>
-                <TextField
-                  label="Email"
-                  variant="standard"
-                />
-              </Box>
-            </Grid>
-            <Grid xs={12} container>
-              <Box mr={2} mt={1}>
-                <TextField
-                  label="Birth Date"
-                  variant="standard"
-                />
-                {/* <CustomDatePicker
+        <form onSubmit={formik.handleSubmit}>
+          <DialogContent dividers>
+            <AddFriendContainer>
+              <Grid xs={12} container>
+                <Box mr={2} mt={1}>
+                  <TextField
+                    id="firstName"
+                    name="firstName"
+                    label="First Name"
+                    variant="standard"
+                    onChange={formik.handleChange}
+                    value={
+                      formik.values.firstName
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.firstName &&
+                  formik.errors.firstName ? (
+                    <div>
+                      {formik.errors.firstName}
+                    </div>
+                  ) : null}
+                </Box>
+                <Box mt={1}>
+                  <TextField
+                    id="lastName"
+                    name="lastName"
+                    label="Last Name"
+                    variant="standard"
+                    onChange={formik.handleChange}
+                    value={formik.values.lastName}
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.lastName &&
+                  formik.errors.lastName ? (
+                    <div>
+                      {formik.errors.lastName}
+                    </div>
+                  ) : null}
+                </Box>
+              </Grid>
+              <Grid xs={12} container>
+                <Box mr={2} mt={1}>
+                  <TextField
+                    id="mobileNumber"
+                    name="mobileNumber"
+                    label="Mobile Number"
+                    variant="standard"
+                    onChange={formik.handleChange}
+                    value={
+                      formik.values.mobileNumber
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.touched.mobileNumber &&
+                  formik.errors.mobileNumber ? (
+                    <div>
+                      {formik.errors.mobileNumber}
+                    </div>
+                  ) : null}
+                </Box>
+                <Box mt={1}>
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    variant="standard"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                  {formik.touched.email &&
+                  formik.errors.email ? (
+                    <div>
+                      {formik.errors.email}
+                    </div>
+                  ) : null}
+                </Box>
+              </Grid>
+              <Grid xs={12} container>
+                <Box mr={2} mt={1}>
+                  <TextField
+                    label="Birth Date"
+                    variant="standard"
+                  />
+                  {/* <CustomDatePicker
                   date={new Date()}
                   label="Birth Date"
                   disableFuture={true}
@@ -131,48 +206,69 @@ const AddFriend: React.FC<AddFriendProps> = ({
                     date: Date | null
                   ) => {}}
                 /> */}
-              </Box>
-              <FormControl
-                variant="standard"
-                sx={{ minWidth: 200 }}
-              >
-                <Box mt={1}>
-                  <InputLabel id="demo-simple-select-standard-label">
-                    Gender
-                  </InputLabel>
-                  <Select
-                    value={gender}
-                    onChange={() => {}}
-                    label="Gender"
-                    fullWidth
-                  >
-                    <MenuItem value="Male">
-                      Male
-                    </MenuItem>
-                    <MenuItem value="FeMale">
-                      FeMale
-                    </MenuItem>
-                    <MenuItem value="Others">
-                      Others
-                    </MenuItem>
-                  </Select>
                 </Box>
-              </FormControl>
-            </Grid>
-            <Grid xs={12} container mt={3}>
-              <TextareaAutosize
-                minRows={3}
-                placeholder="Message"
-                style={{ width: '100%' }}
-              />
-            </Grid>
-          </AddFriendContainer>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
+                <FormControl
+                  variant="standard"
+                  sx={{ minWidth: 200 }}
+                >
+                  <Box mt={1}>
+                    <InputLabel id="demo-simple-select-standard-label">
+                      Gender
+                    </InputLabel>
+                    <Select
+                      label="Gender"
+                      fullWidth
+                      onChange={
+                        formik.handleChange
+                      }
+                      value={formik.values.gender}
+                      onBlur={formik.handleBlur}
+                    >
+                      <MenuItem value="Male">
+                        Male
+                      </MenuItem>
+                      <MenuItem value="FeMale">
+                        FeMale
+                      </MenuItem>
+                      <MenuItem value="Others">
+                        Others
+                      </MenuItem>
+                    </Select>
+                  </Box>
+                  {formik.touched.gender &&
+                  formik.errors.gender ? (
+                    <div>
+                      {formik.errors.gender}
+                    </div>
+                  ) : null}
+                </FormControl>
+              </Grid>
+              <Grid xs={12} container mt={3}>
+                <TextareaAutosize
+                  id="message"
+                  name="message"
+                  minRows={3}
+                  placeholder="Message"
+                  style={{ width: '100%' }}
+                  onChange={formik.handleChange}
+                  value={formik.values.message}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.message &&
+                formik.errors.message ? (
+                  <div>
+                    {formik.errors.message}
+                  </div>
+                ) : null}
+              </Grid>
+            </AddFriendContainer>
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit">
+              Save changes
+            </Button>
+          </DialogActions>
+        </form>
       </BootstrapDialog>
     </div>
   )
