@@ -20,6 +20,7 @@ import {
 import { AddFriendContainer } from './AddFriend.Style'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
+import { Editor } from '@tinymce/tinymce-react'
 
 const BootstrapDialog = styled(Dialog)(
   ({ theme }) => ({
@@ -244,7 +245,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                 </FormControl>
               </Grid>
               <Grid xs={12} container mt={3}>
-                <TextareaAutosize
+                {/* <TextareaAutosize
                   id="message"
                   name="message"
                   minRows={3}
@@ -259,7 +260,28 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   <div>
                     {formik.errors.message}
                   </div>
-                ) : null}
+                ) : null} */}
+                <Editor
+                  apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"
+                  init={{
+                    plugins: [
+                      'emoticons',
+                      'advlist autolink lists link image',
+                      'charmap print preview anchor help',
+                      'searchreplace visualblocks code',
+                      'insertdatetime media table paste wordcount',
+                    ],
+                    toolbar:
+                      'emoticons | undo redo | formatselect | bold italic | \
+                    alignleft aligncenter alignright | \
+                    bullist numlist outdent indent | help',
+                    toolbar_location: 'bottom',
+                    menubar: false,
+                    statusbar: false,
+                    height: 250,
+                    width: 420,
+                  }}
+                />
               </Grid>
             </AddFriendContainer>
           </DialogContent>
