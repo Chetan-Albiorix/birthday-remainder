@@ -132,7 +132,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   />
                   {formik.touched.firstName &&
                   formik.errors.firstName ? (
-                    <div>
+                    <div className="error-color">
                       {formik.errors.firstName}
                     </div>
                   ) : null}
@@ -149,7 +149,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   />
                   {formik.touched.lastName &&
                   formik.errors.lastName ? (
-                    <div>
+                    <div className="error-color">
                       {formik.errors.lastName}
                     </div>
                   ) : null}
@@ -170,7 +170,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   />
                   {formik.touched.mobileNumber &&
                   formik.errors.mobileNumber ? (
-                    <div>
+                    <div className="error-color">
                       {formik.errors.mobileNumber}
                     </div>
                   ) : null}
@@ -187,7 +187,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   />
                   {formik.touched.email &&
                   formik.errors.email ? (
-                    <div>
+                    <div className="error-color">
                       {formik.errors.email}
                     </div>
                   ) : null}
@@ -238,7 +238,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                   </Box>
                   {formik.touched.gender &&
                   formik.errors.gender ? (
-                    <div>
+                    <div className="error-color">
                       {formik.errors.gender}
                     </div>
                   ) : null}
@@ -257,7 +257,7 @@ const AddFriend: React.FC<AddFriendProps> = ({
                 />
                 {formik.touched.message &&
                 formik.errors.message ? (
-                  <div>
+                  <div className="error-color">
                     {formik.errors.message}
                   </div>
                 ) : null} */}
